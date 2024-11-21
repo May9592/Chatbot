@@ -9,6 +9,10 @@ raw_data = [
     {"title": "产品更新通知", "content": "我们很高兴宣布推出新版本，提供了更多功能和性能改进。", "category": "Announcement"},
 ]
 
+API_TOKEN =  os.getenv("API_TOKEN").strip()  # 读取环境变量
+if not API_TOKEN:
+    raise ValueError("环境变量 API_TOKEN 未设置，请检查并重试。")
+
 # 嵌入生成函数（使用硅基流动 API）
 def generate_embedding(text):
     url = "https://api.siliconflow.cn/v1/embeddings"
@@ -18,7 +22,7 @@ def generate_embedding(text):
         "encoding_format": "float"
     }
     headers = {
-        "Authorization": "Bearer sk-lyhtlggzwngfrjnycnqchqlpkgzglkqvxibmirclxgdavsxt",  # 替换为您的实际 token
+        "Authorization": "Bearer " + API_TOKEN,  # 替换为您的实际 token
         "Content-Type": "application/json"
     }
     try:
@@ -49,7 +53,7 @@ for idx, item in enumerate(raw_data):
 # os.makedirs(output_dir, exist_ok=True)
 # output_file = os.path.join(output_dir, "ai_assistant_dataset.json")
 
-output_file = "ai_assistant_dataset.json"
+output_file = "ai_assistant_dataset2.json"
 
 # 保存为 JSON 文件
 with open(output_file, "w", encoding="utf-8") as f:
